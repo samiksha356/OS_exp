@@ -1,0 +1,81 @@
+# Experiment 3(b): Shell Script to Convert File Content into Uppercase
+
+## Aim
+To write a shell script that takes a filename as a command-line argument and converts all the content of the file into uppercase.
+
+## Program
+
+```bash
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 filename"
+    exit 1
+fi
+
+if [ ! -f "$1" ]
+then
+    echo "File does not exist"
+    exit 1
+fi
+
+tr '[:lower:]' '[:upper:]' < "$1" > temp.txt
+mv temp.txt "$1"
+
+echo "File content converted to uppercase successfully."
+```
+
+## Explanation
+1. `#!/bin/bash` specifies that the script will run using Bash.
+2. `$#` checks the number of command-line arguments.
+3. `$1` represents the filename passed as an argument.
+4. `-f` checks whether the given file exists.
+5. `tr '[:lower:]' '[:upper:]'` converts lowercase characters into uppercase.
+6. `temp.txt` temporarily stores the converted content.
+7. `mv` replaces the original file with the converted file.
+8. `echo` displays the success message.
+
+## Execution
+
+**Step 1: Create the shell script**
+
+```bash
+nano uppercase.sh
+```
+
+**Step 2: Give execution permission**
+
+```bash
+chmod +x uppercase.sh
+```
+
+**Step 3: Create a sample file**
+
+```bash
+echo "hello world welcome to linux" > sample.txt
+```
+
+**Step 4: Execute the script**
+
+```bash
+./uppercase.sh sample.txt
+```
+
+**Step 5: Display the updated file**
+
+```bash
+cat sample.txt
+```
+
+## Output
+
+```text
+File content converted to uppercase successfully.
+
+HELLO WORLD WELCOME TO LINUX
+```
+
+## Conclusion
+
+In this experiment, we created a shell script that accepts a filename as a command-line argument and converts all lowercase characters in the file into uppercase using the `tr` command
