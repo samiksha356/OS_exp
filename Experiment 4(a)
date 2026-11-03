@@ -1,0 +1,78 @@
+# Experiment 4(a): Shell Script to Determine the Period for Which a Specific User Has Been Working on the System
+
+## Aim
+To write a shell script that accepts a username as a command-line argument and determines the period for which the user has been logged into the system.
+
+## Program
+
+```bash
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 username"
+    exit 1
+fi
+
+user=$1
+
+if who | grep -q "^$user "
+then
+    echo "User $user is currently logged in."
+    who -u | grep "^$user "
+else
+    echo "User $user is not currently logged in."
+fi
+```
+
+## Explanation
+
+1. `#!/bin/bash` specifies the Bash interpreter.
+2. `$#` checks the number of command-line arguments.
+3. `$1` stores the username passed as an argument.
+4. `who` displays the users currently logged into the system.
+5. `grep` searches for the specified username.
+6. `who -u` displays additional login information, including the idle time and process ID.
+7. The `if-else` statement checks whether the specified user is logged in.
+8. `echo` displays the appropriate message.
+
+## Execution
+
+**Step 1: Create the shell script**
+
+```bash
+nano usertime.sh
+```
+
+**Step 2: Give execution permission**
+
+```bash
+chmod +x usertime.sh
+```
+
+**Step 3: Execute the script**
+
+```bash
+./usertime.sh username
+```
+
+Replace `username` with the actual Linux username.
+
+**Step 4: Check the current logged-in users**
+
+```bash
+who
+```
+
+## Sample Output
+
+```text
+User student is currently logged in.
+student  tty2  2026-11-03  1234  old=00:05
+```
+
+*Note: The output depends on the actual logged-in user and system session.*
+
+## Conclusion
+
+In this experiment, we created a shell script that accepts a username as a command-line argument and checks whether the user is currently logged into the Linux system. We used commands like `who`, `grep`, and `who -u` to obtain user login information
