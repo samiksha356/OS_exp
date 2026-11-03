@@ -1,0 +1,138 @@
+# EXPERIMENT 1: Practice Basic Bash Commands and Linux Operations
+
+## Operating Systems Lab
+
+### Aim
+To practice basic Bash commands and understand I/O redirection, file and directory operations, pipes, searching files, process management, and text editors in the Linux operating system.
+
+## Objectives
+- To understand and execute basic Bash commands.
+- To perform input and output redirection.
+- To create, copy, move, rename, and delete files.
+- To perform directory operations.
+- To understand and use pipes in Linux.
+- To search for files and specific text.
+- To monitor and manage running processes.
+- To practice using Linux text editors.
+
+## 1. Basic Bash Commands
+
+| Command | Description |
+|---|---|
+| `pwd` | Displays the current working directory. |
+| `ls` | Lists files and directories. |
+| `ls -l` | Displays files in detailed format. |
+| `date` | Displays the current date and time. |
+| `whoami` | Displays the current username. |
+| `clear` | Clears the terminal screen. |
+| `cal` | Displays the calendar. |
+| `uname -a` | Displays system information. |
+
+## 2. File Operations
+
+| Command | Description |
+|---|---|
+| `touch file.txt` | Creates an empty file. |
+| `cat file.txt` | Displays file contents. |
+| `cp file.txt copy.txt` | Copies a file. |
+| `mv file.txt new.txt` | Renames or moves a file. |
+| `rm file.txt` | Deletes a file. |
+| `file file.txt` | Displays the file type. |
+
+## 3. Directory Operations
+
+| Command | Description |
+|---|---|
+| `mkdir folder` | Creates a directory. |
+| `rmdir folder` | Removes an empty directory. |
+| `cd folder` | Changes the current directory. |
+| `cd ..` | Moves to the parent directory. |
+| `cd ~` | Moves to the home directory. |
+| `tree` | Displays the directory structure. |
+| `rm -r folder` | Removes a directory and its contents. |
+
+## 4. Input and Output Redirection
+
+Redirection is used to control where input comes from and where output goes.
+
+- `>` : Redirects output to a file and overwrites existing content.
+- `>>` : Appends output to an existing file.
+- `<` : Takes input from a file.
+- `2>` : Redirects error messages to a file.
+
+**Examples:**
+
+```bash
+ls > output.txt
+date >> output.txt
+cat < output.txt
+ls wrongfile 2> error.txt
+```
+
+## 5. Pipes
+
+A pipe (`|`) is used to send the output of one command as input to another command.
+
+**Examples:**
+
+```bash
+ls | wc -l
+cat file.txt | grep "Linux"
+ps aux | less
+```
+
+## 6. Searching Files and Text
+
+| Command | Description |
+|---|---|
+| `find . -name "file.txt"` | Searches for a file by name. |
+| `grep "Linux" file.txt` | Searches for a word in a file. |
+| `grep -i "linux" file.txt` | Searches without case sensitivity. |
+| `grep -n "Linux" file.txt` | Displays matching lines with line numbers. |
+| `locate file.txt` | Searches for files using the locate database. |
+
+## 7. Process Management
+
+Process management involves monitoring and controlling running processes.
+
+| Command | Description |
+|---|---|
+| `ps` | Displays running processes. |
+| `ps aux` | Displays detailed process information. |
+| `top` | Monitors running processes in real time. |
+| `htop` | Provides an interactive process monitor (if installed). |
+| `jobs` | Displays background jobs in the current shell. |
+| `sleep 100 &` | Runs a process in the background. |
+| `kill PID` | Terminates a process using its process ID. |
+| `kill -9 PID` | Forcefully terminates a process. |
+| `Ctrl + C` | Interrupts a running process. |
+| `Ctrl + Z` | Suspends a running process. |
+
+## 8. Text Editors
+
+Linux provides different text editors to create and modify files.
+
+### Nano Editor
+
+```bash
+nano file.txt
+```
+
+- `Ctrl + O` – Save the file.
+- `Enter` – Confirm the filename.
+- `Ctrl + X` – Exit the editor.
+- `Ctrl + K` – Cut a line.
+- `Ctrl + U` – Paste a line.
+
+### Vim Editor
+
+```bash
+vim file.txt
+```
+
+- `i` – Enter insert mode.
+- `Esc` – Return to command mode.
+- `:w` – Save the file.
+- `:q` – Quit.
+- `:wq` – Save and quit.
+- `:q!` – Quit without saving.
