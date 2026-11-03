@@ -1,0 +1,64 @@
+# Experiment 3(a): File or Directory Check Using Shell Script
+
+## Aim
+To write a shell script that takes a command-line argument and reports whether the given argument is a directory or a file.
+
+## Shell Script
+
+```bash
+#!/bin/bash
+
+if [ -d "$1" ]
+then
+    echo "It is a directory"
+elif [ -f "$1" ]
+then
+    echo "It is a file"
+else
+    echo "File or directory does not exist"
+fi
+```
+
+## Explanation
+- `#!/bin/bash` specifies the Bash shell.
+- `$1` represents the first command-line argument.
+- `-d` checks whether the given argument is a directory.
+- `-f` checks whether the given argument is a regular file.
+- `echo` displays the output.
+- `else` executes when the argument is neither an existing directory nor a regular file.
+
+## Execution
+
+Save the script as `exp3a.sh`.
+
+Give execution permission:
+
+```bash
+chmod +x exp3a.sh
+```
+
+Run the script:
+
+```bash
+./exp3a.sh Documents
+```
+
+## Sample Output
+
+**When the argument is a directory:**
+```text
+It is a directory
+```
+
+**When the argument is a file:**
+```text
+It is a file
+```
+
+**When the argument does not exist:**
+```text
+File or directory does not exist
+```
+
+## Conclusion
+Successfully created and executed a shell script that accepts a command-line argument and checks whether it is a file or directory using conditional statements.
