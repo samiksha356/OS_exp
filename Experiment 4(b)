@@ -1,0 +1,94 @@
+# Experiment 4(b): Shell Script to Display Lines Between Given Start and End Line Numbers
+
+## Aim
+To write a shell script that accepts a filename, start line number, and end line number as command-line arguments and displays all the lines between the specified line numbers.
+
+## Program
+
+```bash
+#!/bin/bash
+
+if [ $# -ne 3 ]
+then
+    echo "Usage: $0 filename start_line end_line"
+    exit 1
+fi
+
+file=$1
+start=$2
+end=$3
+
+if [ ! -f "$file" ]
+then
+    echo "File does not exist"
+    exit 1
+fi
+
+if [ "$start" -le 0 ] || [ "$end" -lt "$start" ]
+then
+    echo "Invalid line numbers"
+    exit 1
+fi
+
+sed -n "${start},${end}p" "$file"
+```
+
+## Explanation
+
+1. `#!/bin/bash` specifies the Bash interpreter.
+2. `$#` checks the number of command-line arguments.
+3. `$1` stores the filename.
+4. `$2` stores the starting line number.
+5. `$3` stores the ending line number.
+6. `-f` checks whether the specified file exists.
+7. The `if` condition checks whether the line numbers are valid.
+8. `sed -n` is used to display selected lines from a file.
+9. `${start},${end}p` prints all lines from the starting line to the ending line.
+
+## Execution
+
+**Step 1: Create the shell script**
+
+```bash
+nano display.sh
+```
+
+**Step 2: Give execution permission**
+
+```bash
+chmod +x display.sh
+```
+
+**Step 3: Create a sample file**
+
+```bash
+nano sample.txt
+```
+
+Add the following content:
+
+```text
+Linux is an operating system.
+Bash is a command interpreter.
+It supports shell scripting.
+Linux supports multitasking.
+Processes are managed by the OS.
+```
+
+**Step 4: Execute the script**
+
+```bash
+./display.sh sample.txt 2 4
+```
+
+## Output
+
+```text
+Bash is a command interpreter.
+It supports shell scripting.
+Linux supports multitasking.
+```
+
+## Conclusion
+
+In this experiment, we created a shell script that accepts a filename, starting line number, and ending line number as command-line arguments. We used the `sed` command to display the specified range of lines from the file
