@@ -1,0 +1,159 @@
+# Experiment 6: Memory Allocation and Monitoring Using C Program
+
+## Aim
+To write a C program that takes the number of megabytes of memory as a command-line argument and consumes that amount of memory during execution. Observe the memory usage of the system using the `free` command.
+
+## Objectives
+- To understand dynamic memory allocation in C.
+- To allocate memory using the `malloc()` function.
+- To understand command-line arguments.
+- To observe memory usage during program execution.
+- To monitor memory usage using the Linux `free` command.
+
+## Program
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        printf("Usage: %s <memory_in_MB>\n", argv[0]);
+        return 1;
+    }
+
+    int mb = atoi(argv[1]);
+
+    if (mb <= 0)
+    {
+        printf("Enter a valid memory size\n");
+        return 1;
+    }
+
+    size_t size = (size_t)mb * 1024 * 1024;
+
+    char *ptr = (char *)malloc(size);
+
+    if (ptr == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    memset(ptr, 'A', size);
+
+    printf("Successfully allocated %d MB of memory.\n", mb);
+    printf("Press Ctrl+C to terminate the program.\n");
+
+    while (1)
+    {
+        sleep(1);
+    }
+
+    free(ptr);
+
+    return 0;
+}
+```
+
+## Explanation
+
+1. `#include <stdio.h>` is used for input and output operations.
+2. `#include <stdlib.h>` provides functions like `malloc()` and `atoi()`.
+3. `#include <string.h>` provides the `memset()` function.
+4. `argc` represents the number of command-line arguments.
+5. `argv[]` stores the command-line arguments.
+6. `atoi(argv[1])` converts the memory size from a string into an integer.
+7. `malloc()` dynamically allocates the requested memory.
+8. `memset()` writes data into the allocated memory so that the operating system commits the memory pages.
+9. `while(1)` keeps the program running so that memory usage can be observed.
+10. `free()` releases the allocated memory when the program finishes. In this program, it is not reached during normal execution because of the infinite loop.
+
+## Execution Steps
+
+### Step 1: Create the C Program
+
+```bash
+nano exp6.c
+```
+
+Write the above program and save it.
+
+### Step 2: Compile the Program
+
+```bash
+gcc exp6.c -o exp6
+```
+
+### Step 3: Check Initial Memory Usage
+
+```bash
+free -h
+```
+
+This command displays the total, used, free, shared, and available memory of the system.
+
+### Step 4: Run the Program
+
+```bash
+./exp6 100
+```
+
+Here, `100` represents the amount of memory in megabytes that the program will allocate.
+
+### Step 5: Observe Memory Usage
+
+Open another terminal and execute:
+
+```bash
+watch -n 1 free -h
+```
+
+This command updates the memory usage information every second.
+
+### Step 6: Terminate the Program
+
+Press:
+
+```text
+Ctrl + C
+```
+
+The program terminates and the allocated memory is released.
+
+## Sample Output
+
+**Program Terminal:**
+
+```text
+Successfully allocated 100 MB of memory.
+Press Ctrl+C to terminate the program.
+```
+
+**Memory Monitoring Terminal:**
+
+```text
+              total        used        free      shared  buff/cache   available
+Mem:           7.6Gi       2.1Gi       3.8Gi       120Mi       1.7Gi       5.2Gi
+Swap:          2.0Gi          0B       2.0Gi
+```
+
+*Note: The memory values shown above are illustrative. Actual output depends on the system.*
+
+## Commands Used
+
+| Command | Description |
+|---|---|
+| `gcc exp6.c -o exp6` | Compiles the C program. |
+| `./exp6 100` | Allocates 100 MB of memory. |
+| `free -h` | Displays memory usage in human-readable format. |
+| `watch -n 1 free -h` | Updates memory usage every second. |
+| `Ctrl + C` | Terminates the running program. |
+
+## Conclusion
+
+In this experiment, we created a C program that accepts memory size in megabytes as a command-line argument and dynamically allocates the requested memory using `malloc()`. We used `memset()` to access the allocated memory and the Linux `free` command to observe changes in memory usage. This experiment helped us understand dynamic memory allocation and memory monitoring in Linux
