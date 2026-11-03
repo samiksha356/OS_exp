@@ -1,0 +1,101 @@
+# Experiment 4(c): Shell Script to Delete All Lines Containing a Specific Word from One or More Files
+
+## Aim
+To write a shell script that accepts a specific word and one or more filenames as command-line arguments and deletes all lines containing that word from the given files.
+
+## Program
+
+```bash
+#!/bin/bash
+
+if [ $# -lt 2 ]
+then
+    echo "Usage: $0 word filename1 [filename2 ...]"
+    exit 1
+fi
+
+word=$1
+shift
+
+for file in "$@"
+do
+    if [ -f "$file" ]
+    then
+        sed -i "/$word/d" "$file"
+        echo "Lines containing '$word' deleted from $file"
+    else
+        echo "File $file does not exist"
+    fi
+done
+```
+
+## Explanation
+
+1. `#!/bin/bash` specifies the Bash interpreter.
+2. `$#` checks the number of command-line arguments.
+3. `$1` stores the specific word to be searched.
+4. `shift` removes the first argument (word) and shifts the remaining arguments.
+5. `for file in "$@"` processes all filenames supplied as arguments.
+6. `-f` checks whether the file exists.
+7. `sed -i` modifies the original file directly.
+8. `/word/d` deletes all lines containing the specified word.
+9. `echo` displays the result.
+
+## Execution
+
+**Step 1: Create the shell script**
+
+```bash
+nano delete.sh
+```
+
+**Step 2: Give execution permission**
+
+```bash
+chmod +x delete.sh
+```
+
+**Step 3: Create sample files**
+
+```bash
+echo -e "Linux is an OS\nBash is a shell\nLinux supports multitasking" > file1.txt
+
+echo -e "Python is a language\nLinux is powerful\nBash scripting is useful" > file2.txt
+```
+
+**Step 4: Execute the script**
+
+```bash
+./delete.sh Linux file1.txt file2.txt
+```
+
+**Step 5: Display the updated files**
+
+```bash
+cat file1.txt
+cat file2.txt
+```
+
+## Output
+
+```text
+Lines containing 'Linux' deleted from file1.txt
+Lines containing 'Linux' deleted from file2.txt
+```
+
+**Contents of file1.txt:**
+
+```text
+Bash is a shell
+```
+
+**Contents of file2.txt:**
+
+```text
+Python is a language
+Bash scripting is useful
+```
+
+## Conclusion
+
+In this experiment, we created a shell script that accepts a specific word and multiple filenames as command-line arguments. We used the `shift`, `for` loop, and `sed` commands to search for and delete all lines containing the specified word from the given files
