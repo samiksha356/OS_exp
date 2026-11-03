@@ -1,0 +1,119 @@
+# Experiment 9: Creating a Child Process and Waiting for Its Termination
+
+## Aim
+To write a C program that creates a child process, waits for its termination, and displays its Process ID (PID).
+
+## Objectives
+- To understand parent and child processes.
+- To create a child process using the `fork()` system call.
+- To display the PID of the child process.
+- To make the parent process wait for the child process using `wait()`.
+- To understand process termination in Linux.
+
+## Program
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+
+int main()
+{
+    pid_t pid;
+
+    pid = fork();
+
+    if (pid < 0)
+    {
+        printf("Fork failed\n");
+        return 1;
+    }
+    else if (pid == 0)
+    {
+        printf("Child Process\n");
+        printf("Child PID: %d\n", getpid());
+        printf("Parent PID: %d\n", getppid());
+
+        printf("Child process is terminating...\n");
+        exit(0);
+    }
+    else
+    {
+        printf("Parent Process\n");
+        printf("Parent PID: %d\n", getpid());
+        printf("Child PID: %d\n", pid);
+
+        wait(NULL);
+
+        printf("Child process has terminated.\n");
+        printf("Parent process is continuing.\n");
+    }
+
+    return 0;
+}
+```
+
+## Explanation
+
+1. `stdio.h` is used for input and output operations.
+2. `unistd.h` provides system calls such as `fork()`, `getpid()`, and `getppid()`.
+3. `sys/wait.h` provides the `wait()` system call.
+4. `fork()` creates a new child process.
+5. If `fork()` returns a negative value, process creation has failed.
+6. If `fork()` returns `0`, the child process is executing.
+7. If `fork()` returns a positive value, the parent process is executing. The returned value is the child's PID.
+8. `getpid()` displays the current process ID.
+9. `getppid()` displays the parent process ID.
+10. `wait(NULL)` makes the parent wait until the child process terminates.
+11. `exit(0)` terminates the child process successfully.
+
+## Execution Steps
+
+### Step 1: Create the C Program
+
+```bash
+nano exp9.c
+```
+
+### Step 2: Compile the Program
+
+```bash
+gcc exp9.c -o exp9
+```
+
+### Step 3: Execute the Program
+
+```bash
+./exp9
+```
+
+## Sample Output
+
+```text
+Parent Process
+Parent PID: 2450
+Child PID: 2451
+
+Child Process
+Child PID: 2451
+Parent PID: 2450
+Child process is terminating...
+
+Child process has terminated.
+Parent process is continuing.
+```
+
+*Note: Actual PID values and the order of the first parent/child messages may vary during execution.*
+
+## Commands Used
+
+| Command | Description |
+|---|---|
+| `nano exp9.c` | Creates the C program. |
+| `gcc exp9.c -o exp9` | Compiles the program. |
+| `./exp9` | Executes the program. |
+
+## Conclusion
+
+In this experiment, we created a child process using the `fork()` system call and displayed its PID. We used `getpid()` and `getppid()` to identify the parent and child processes. We also used the `wait()` system call to make the parent process wait until the child process terminates. Thus, we understood process creation and synchronization in Linux.
