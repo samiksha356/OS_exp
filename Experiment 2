@@ -1,0 +1,50 @@
+# Experiment 2: Linux Commands
+
+## Aim
+To execute the `date` and `who` commands in one line using output redirection and to use `sed` commands to swap the first and second words in each line of a file.
+
+## 1. Date and Who Commands
+
+**Command:**
+```bash
+date; who > users.txt
+```
+
+**Explanation:**
+- `date` displays the current date and time on the screen.
+- `;` separates two commands.
+- `who` displays the users currently logged into the system.
+- `>` redirects the output of `who` into a file named `users.txt`.
+
+## 2. Swapping the First and Second Words Using Sed
+
+**Command:**
+```bash
+sed -E 's/^([^ ]+) +([^ ]+)/\2 \1/' filename.txt
+```
+
+**Sample Input (filename.txt):**
+```text
+Hello World
+Operating System
+Linux Commands
+```
+
+**Output:**
+```text
+World Hello
+System Operating
+Commands Linux
+```
+
+**Explanation:**
+- `sed` is a stream editor used for text manipulation.
+- `-E` enables extended regular expressions.
+- `^` represents the beginning of a line.
+- `([^ ]+)` matches the first word.
+- `([^ ]+)` matches the second word.
+- `\2` represents the second word.
+- `\1` represents the first word.
+
+## Conclusion
+Successfully executed the `date` and `who` commands using output redirection and swapped the first two words in each line of a file using the `sed` command.
