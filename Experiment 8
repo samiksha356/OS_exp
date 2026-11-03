@@ -1,0 +1,202 @@
+# Experiment 8: Memory Map of CPU-Bound and I/O-Bound Processes Using pmap Command
+
+## Aim
+To observe and compare the memory maps of CPU-bound and I/O-bound processes using the `pmap` command in Linux.
+
+## Objectives
+- To understand CPU-bound and I/O-bound processes.
+- To create CPU-bound and I/O-bound C programs.
+- To understand the memory map of a process.
+- To observe memory allocation using the `pmap` command.
+- To compare the memory usage of CPU-bound and I/O-bound processes.
+
+## 1. CPU-Bound Process
+
+A CPU-bound process is a process that spends most of its time performing calculations and using the CPU rather than waiting for input/output operations.
+
+### Program: cpu.c
+
+```c
+#include <stdio.h>
+
+int main()
+{
+    unsigned long long i = 0;
+
+    printf("CPU-bound process is running...\n");
+
+    while (1)
+    {
+        i++;
+    }
+
+    return 0;
+}
+```
+
+## 2. I/O-Bound Process
+
+An I/O-bound process is a process that spends most of its time waiting for input/output operations such as reading or writing files.
+
+### Program: io.c
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+    FILE *fp;
+
+    printf("I/O-bound process is running...\n");
+
+    while (1)
+    {
+        fp = fopen("data.txt", "a");
+
+        if (fp != NULL)
+        {
+            fprintf(fp, "Operating System Lab\n");
+            fclose(fp);
+        }
+
+        sleep(1);
+    }
+
+    return 0;
+}
+```
+
+## 3. Explanation
+
+### CPU-Bound Program
+1. `unsigned long long i` declares a variable.
+2. `while(1)` creates an infinite loop.
+3. `i++` continuously performs calculations.
+4. The process keeps the CPU busy.
+
+### I/O-Bound Program
+1. `stdio.h` provides file handling functions.
+2. `unistd.h` provides the `sleep()` function.
+3. `fopen()` opens the file in append mode.
+4. `fprintf()` writes data into the file.
+5. `fclose()` closes the file.
+6. `sleep(1)` pauses execution for one second.
+7. The process repeatedly performs file input/output operations.
+
+## 4. Execution Steps
+
+### Step 1: Create the CPU-Bound Program
+
+```bash
+nano cpu.c
+```
+
+### Step 2: Create the I/O-Bound Program
+
+```bash
+nano io.c
+```
+
+### Step 3: Compile Both Programs
+
+```bash
+gcc cpu.c -o cpu
+gcc io.c -o io
+```
+
+### Step 4: Run Both Programs
+
+Open separate terminals.
+
+**Terminal 1:**
+
+```bash
+./cpu
+```
+
+**Terminal 2:**
+
+```bash
+./io
+```
+
+### Step 5: Find the Process IDs
+
+```bash
+pgrep -a cpu
+pgrep -a io
+```
+
+Note down the PIDs of both processes.
+
+### Step 6: Observe the Memory Map of CPU-Bound Process
+
+```bash
+pmap PID
+```
+
+Replace PID with the actual PID of the CPU-bound process.
+
+### Step 7: Observe the Memory Map of I/O-Bound Process
+
+```bash
+pmap PID
+```
+
+Replace PID with the actual PID of the I/O-bound process.
+
+### Step 8: Display Detailed Memory Information
+
+```bash
+pmap -x PID
+```
+
+The `-x` option displays extended memory information, including:
+
+- Address
+- Kbytes
+- RSS (Resident Set Size)
+- Dirty memory
+- Mapping information
+
+### Step 9: Terminate Both Processes
+
+Press `Ctrl + C` in both terminals.
+
+Alternatively, use:
+
+```bash
+kill PID
+```
+
+## 5. Commands Used
+
+| Command | Description |
+|---|---|
+| `gcc cpu.c -o cpu` | Compiles the CPU-bound program. |
+| `gcc io.c -o io` | Compiles the I/O-bound program. |
+| `./cpu` | Executes the CPU-bound process. |
+| `./io` | Executes the I/O-bound process. |
+| `pgrep -a cpu` | Finds the CPU process ID. |
+| `pgrep -a io` | Finds the I/O process ID. |
+| `pmap PID` | Displays the memory map of a process. |
+| `pmap -x PID` | Displays detailed memory usage. |
+| `kill PID` | Terminates a process. |
+
+## 6. Observation
+
+After executing both programs, we used the `pmap` command to observe their memory maps.
+
+| CPU-Bound Process | I/O-Bound Process |
+|---|---|
+| Performs continuous calculations. | Performs repeated file operations. |
+| Uses more CPU processing time. | Spends more time waiting for I/O. |
+| Has its own process memory map. | Has its own process memory map. |
+| Memory usage depends on the program. | Memory usage depends on the program. |
+
+**Note:** Both processes have similar basic memory regions, such as code, data, heap and stack. The `pmap` command displays memory mappings, not CPU utilization. Their memory usage may be similar even though their CPU and I/O behaviour is different.
+
+## 7. Conclusion
+
+In this experiment, we created CPU-bound and I/O-bound processes using C programs. We used the `pmap` command to observe their memory maps and the `pmap -x` command to view detailed memory information. We learned that both processes have separate memory maps and that CPU-bound and I/O-bound processes differ mainly in their CPU and input/output activities
