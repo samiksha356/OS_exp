@@ -1,0 +1,149 @@
+# Experiment 7: CPU-Bound C Program and CPU Usage Monitoring Using top Command
+
+## Aim
+To write a CPU-bound C program that performs continuous computations and observe its CPU usage using the Linux `top` command.
+
+## Objectives
+- To understand the concept of CPU-bound processes.
+- To write a C program that performs continuous calculations.
+- To understand CPU utilization.
+- To monitor CPU usage using the `top` command.
+- To observe how a CPU-bound process affects system performance.
+
+## Program
+
+```c
+#include <stdio.h>
+
+int main()
+{
+    unsigned long long i = 0;
+
+    printf("CPU-bound program is running...\n");
+    printf("Press Ctrl+C to terminate the program.\n");
+
+    while (1)
+    {
+        i++;
+    }
+
+    return 0;
+}
+```
+
+## Explanation
+
+1. `#include <stdio.h>` is used for input and output operations.
+2. `int main()` is the starting point of the program.
+3. `unsigned long long i` declares a variable to store a large integer value.
+4. `printf()` displays a message on the terminal.
+5. `while(1)` creates an infinite loop.
+6. `i++` continuously increments the variable.
+7. The program continuously performs calculations and keeps the CPU busy.
+8. `Ctrl + C` is used to terminate the program.
+
+## Execution Steps
+
+### Step 1: Create the C Program
+
+```bash
+nano exp7.c
+```
+
+Write the above program and save the file.
+
+### Step 2: Compile the Program
+
+```bash
+gcc exp7.c -o exp7
+```
+
+### Step 3: Execute the Program
+
+```bash
+./exp7
+```
+
+The program will start executing and continuously perform calculations.
+
+### Step 4: Open Another Terminal
+
+Open a second terminal using:
+
+```text
+Ctrl + Alt + T
+```
+
+### Step 5: Monitor CPU Usage
+
+Execute the following command:
+
+```bash
+top
+```
+
+The `top` command displays real-time information about running processes and CPU utilization.
+
+### Step 6: Observe CPU Usage
+
+Find the process named `exp7` in the `top` output.
+
+Observe the following columns:
+
+- **PID:** Process ID.
+- **USER:** Owner of the process.
+- **%CPU:** Percentage of CPU being used.
+- **%MEM:** Percentage of memory being used.
+- **COMMAND:** Name of the running program.
+
+### Step 7: Terminate the Program
+
+Return to the first terminal and press:
+
+```text
+Ctrl + C
+```
+
+The program will stop executing.
+
+## Sample Output
+
+**First Terminal:**
+
+```text
+CPU-bound program is running...
+Press Ctrl+C to terminate the program.
+```
+
+**Second Terminal:**
+
+```text
+top - 10:30:15
+Tasks: 150 total, 2 running, 148 sleeping
+%Cpu(s): 95.0 us, 3.0 sy, 2.0 id
+
+PID    USER      PR   NI   %CPU   %MEM   COMMAND
+2345   student   20   0    99.0   0.1    exp7
+```
+
+*Note: The above values are illustrative. Actual CPU usage depends on the system and number of CPU cores.*
+
+## Commands Used
+
+| Command | Description |
+|---|---|
+| `nano exp7.c` | Creates the C program. |
+| `gcc exp7.c -o exp7` | Compiles the C program. |
+| `./exp7` | Executes the program. |
+| `top` | Monitors CPU and process usage in real time. |
+| `Ctrl + C` | Terminates the running program. |
+
+## Observation
+
+After executing the CPU-bound program, we observed that the CPU utilization increased significantly. The `top` command displayed the running process and its CPU usage.
+
+The program continuously performs calculations inside an infinite loop, which keeps the CPU busy.
+
+## Conclusion
+
+In this experiment, we created a CPU-bound C program using an infinite loop that continuously performs calculations. We monitored its CPU utilization using the Linux `top` command. We observed that the program consumed a significant amount of CPU resources while running. This experiment helped us understand CPU-bound processes and CPU utilization in Linux.
