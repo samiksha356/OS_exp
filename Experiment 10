@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    int stack_var = 42;
+    printf("PID: %d  Stack variable address: %p\n", getpid(), (void *)&stack_var);
+    fflush(stdout);
+    while (1) {
+        sleep(1);
+    }
+    return 0;
+}
+EOF
+gcc addr.c -o addr
+./addr &
+./addr &
+./addr &
+./addr &
+sleep 1
+jobs
